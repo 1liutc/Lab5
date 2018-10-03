@@ -9,9 +9,10 @@
  */
 public class Bank {
 
-    public String bankName;
+    private String bankName;
 
     public Bank() {
+
         bankName = "Illini Bank";
     }
 
@@ -26,6 +27,19 @@ public class Bank {
      * @return boolean
      */
     public boolean withdrawMoney(final BankAccount bankAccount, final double amount) {
+        if (bankAccount == null) {
+            return false;
+        }
+        if (amount < 0) {
+            return false;
+        }
+        if (bankAccount.getAccuntBalance() >= amount) {
+            bankAccount.setAccuntBalance(bankAccount.getAccuntBalance() - amount);
+            System.out.println("bankBalance after withdraw: " + bankAccount.getAccuntBalance());
+            return true;
+        } else {
+            return false;
+        }
         /*
          * Implement this function
          */
@@ -42,6 +56,15 @@ public class Bank {
      * @return boolean
      */
     public boolean depositMoney(final BankAccount bankAccount, final double amount) {
+        if (bankAccount == null) {
+            return false;
+        }
+        if (amount < 0) {
+            return false;
+        }
+        bankAccount.setAccuntBalance(bankAccount.getAccuntBalance() + amount);
+        System.out.println("bankBalance after deposit: " + bankAccount.getAccuntBalance());
+        return true;
         /*
          * Implement this function
          */
@@ -61,19 +84,39 @@ public class Bank {
 
     public boolean transferMoney(final BankAccount source, final BankAccount destination,
             final double amount) {
+        if (source == null || destination == null) {
+            return false;
+        }
+        if (amount < 0) {
+            return false;
+        }
+        if (source.getAccuntBalance() < amount) {
+            return false;
+        }
+        System.out.println("sourse before transfer: " + source.getAccuntBalance() + " " + "destination before transfer: " + destination.getAccuntBalance());
+        if (withdrawMoney(source,amount) && depositMoney(destination, amount)) {
+            System.out.println("sourse after transfer: " + source.getAccuntBalance() + " " + "destination after transfer: " + destination.getAccuntBalance());
+            return withdrawMoney(source,amount) && depositMoney(destination, amount);
+        } else {
+            return false;
+        }
+
         /*
          * Implement this function
          */
     }
 
     /**
-     * Change back account owner name.
+     * Change bank account owner name.
      *
      * @param bankAccount to change
      * @param name new name to set
      */
 
     public void changeOwnerName(final BankAccount bankAccount, final String name) {
+        if (bankAccount != null) {
+            bankAccount.setOwnerName(name);
+        }
         /*
          * Implement this function
          */
@@ -86,6 +129,7 @@ public class Bank {
      * @return the total number of accounts
      */
     public static int getNumberOfAccount() {
+        return totalAccounts;
         /*
          * Implement this function
          */

@@ -26,10 +26,26 @@ public class BankAccount {
     public double interestRate;
     private double interestEarned;
 
+
     public BankAccount(final String name, final BankAccountType accountCategory) {
+        ownerName = name;
+        accountType = accountCategory;
+        Bank.totalAccounts++;
         /*
          * Implement this function
          */
+    }
+    public int getAccountNumber() {
+        return accountNumber;
+    }
+    public double getAccuntBalance() {
+        return accountBalance;
+    }
+    public void setAccuntBalance(double setBalance) {
+        accountBalance = setBalance;
+    }
+    public void setOwnerName(String name) {
+        ownerName = name;
     }
 
     /*
